@@ -1,4 +1,4 @@
-import os, bs4, requests, sys 
+import os, bs4, requests
 
 if __name__ == "__main__":
 
@@ -19,13 +19,13 @@ if __name__ == "__main__":
 				res.raise_for_status()
 				break
 			except KeyboardInterrupt:
-				sys.exit(0)
+				raise
 			except:
 				pass
 				
 		#Get the source for the comic using Beautiful Soup
 		soup = bs4.BeautifulSoup(res.text, "html.parser")
-		image = soup.select('img[id="cc-comic"]')[0]
+		image = soup.select("#cc-comic")[0]
 		comic = image.get('src')
 		
 		try:
@@ -37,12 +37,12 @@ if __name__ == "__main__":
 				file.write(chunk)		
 			file.close()
 		except KeyboardInterrupt:
-			sys.exit(0)
+			raise
 		except:
 			pass
 	
 		prev = soup.select('a[class="prev"]')	
 		if prev == []:
 			print("Done printing.")
-			sys.exit(0)
+			break
 		url = prev[0].get('href')
